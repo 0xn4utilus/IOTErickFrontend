@@ -21,7 +21,7 @@ export default function LoginForm() {
     // check if user is logged in
     axios.get('/check-already-login').then((res) => {
       console.log(res.data);
-      if(res.data.status == "success"){
+      if(res.data.status === "success"){
         navigate('/dashboard/app', { replace: true });
       }
     }
@@ -32,22 +32,22 @@ export default function LoginForm() {
   
 
   const handleClick = () => {
-    // if(Password == "admin"){
+    // if(Password === "admin"){
     // navigate('/dashboard/app', { replace: true });
     // }
-    if(username == "" || email == "" || Password == ""){
+    if(username === "" || email === "" || Password === ""){
       alert("Please fill all the fields");
       return;
     }
 
     try {
       axios.post('/admin-login', {
-        name: username,
-        email: email,
-        password: Password
+        username,
+        email,
+        Password
       }).then((res) => {
         console.log(res.data);
-        if(res.data.status == "success"){
+        if(res.data.status === "success"){
           navigate('/dashboard/app', { replace: true });
         }
         else{

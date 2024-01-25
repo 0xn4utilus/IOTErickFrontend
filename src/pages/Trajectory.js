@@ -47,7 +47,7 @@ const animate = () => {
   overlay.setProps({
     layers: [tripsLayer],
   });
-  if(animating) {
+  if (animating) {
     window.requestAnimationFrame(animate);
   }
 };
@@ -74,31 +74,60 @@ function Trajectory(props, trajectoryStatus) {
     onFilterChange(null);
   }, [erick_id, start_date, end_date]);
 
-  const startAnimation = (locations) => {
+  const startAnimation = (loc) => {
+    console.log("loc",loc);
+    let coordinateData = '';
+    var locations ;
+    let timestamps = [];
+    try{
+      var timeDifference = new Date(loc.slice(-1)[0].time).getTime() - new Date(loc[0].time).getTime();
+
+    }catch{
+      var timeDifference = 50000;
+
+    }
+    loc.map((element) => {
+      coordinateData += element.lat + ',' + element.lng + '|';
+    });
+    coordinateData = coordinateData.substring(0, coordinateData.length - 1);
+    axios
+      .get(
+        `https://roads.googleapis.com/v1/snapToRoads?interpolate=true&path=${coordinateData}&key=AIzaSyBB5VtbYNkoqHZD9uPohGNszVQnSsCo5ko`
+      )
+      .then((response) => {
+        console.log('papa ki pari', response);
+        locations = response.data.snappedPoints.map((x)=>({lat:x.location.latitude,lng:x.location.longitude })  )
+        console.log(locations)
+        // timestamps.push(Math.round((new Date(location.time).getTime() - offset) / 5000));
+        for (let i = 1; i<= response.data.snappedPoints.length;i++){
+          timestamps.push((timeDifference*i) / (response.data.snappedPoints.length * 5000) )
+        }
+      
+      
+    console.log("locations",locations)
     animating = false;
-    overlay.setProps({layers: [],});
+    overlay.setProps({ layers: [] });
     if (locations.length > 1) {
-      let path = [];
-      let timestamps = [];
-      let last_lat = locations[0].lng;
-      let last_lng = locations[0].lat;
-      let offset = new Date(locations[0].time).getTime();
+      var path = [];
+      var last_lat = locations[0].lat;
+      var last_lng = locations[0].lng;
       for (let location of locations) {
         if (last_lat != location.lat || last_lng != location.lng) {
           path.push([parseFloat(location.lng), parseFloat(location.lat)]);
-          timestamps.push(Math.round((new Date(location.time).getTime() - offset) / 10000));
         }
         last_lng = location.lng;
         last_lat = location.lat;
       }
       let data = [{ vendor: 0, path: path, timestamps: timestamps }];
-      console.log(JSON.stringify(data));
+      console.log("lmao",JSON.stringify(data));
       propsGlobal.data = data;
       currentTime = 0;
       LOOP_LENGTH = timestamps[timestamps.length - 1];
       animating = true;
       window.requestAnimationFrame(animate);
-    }
+    }});
+    timestamps = [];
+    locations = [];
   };
   useEffect(() => {
     startAnimation(filterLocations);
@@ -256,7 +285,7 @@ function Trajectory(props, trajectoryStatus) {
         id="deckgl-example"
         mapContainerStyle={{
           height: '75vh',
-          width: '80vw'
+          width: '80vw',
         }}
         zoom={16}
         center={{
