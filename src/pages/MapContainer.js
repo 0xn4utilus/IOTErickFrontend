@@ -156,17 +156,16 @@ function MapContainer(props, trajectoryStatus) {
   // }, []);
   useEffect(() => {
     axios.get(`/get-erick-data/`).then((response) => {
-      console.log(response);
       response.data.map((element) => {
         setLocations(
           (map) =>
             new Map(
-              locations.set(element.erick_id, {
-                erick_id: element.erick_id,
-                lat: element.lat,
-                lng: element.lng,
-                speed: element.speed,
-                time: element.time,
+              locations.set(element._id, {
+                erick_id: element.data.erick_id,
+                lat: element.data.lat,
+                lng: element.data.lng,
+                speed: element.data.speed,
+                time: element.data.time,
               })
             )
         );
@@ -235,16 +234,23 @@ function MapContainer(props, trajectoryStatus) {
                     },
                   }}
                 >
-                  {Array.from(locations.keys()).map((element) => {
+                  <MenuItem style={{ paddingRight: '20px' }} value="all">
+                    all
+                  </MenuItem>
+                  <MenuItem style={{ paddingRight: '20px' }} value="all">
+                    {locations.keys()[0]}
+                  </MenuItem>
+                  {locations !== undefined
+                  
+                  ? Array.from(locations.keys()).map((element) => {
                     return (
                       <MenuItem style={{ paddingRight: '20px' }} value={element}>
                         {element}
                       </MenuItem>
                     );
-                  })}
-                  <MenuItem style={{ paddingRight: '20px' }} value="all">
-                    all
-                  </MenuItem>
+                  })
+                :
+                <></>}
                 </Select>
                 {idSet ? (
                   <>
@@ -333,7 +339,6 @@ function MapContainer(props, trajectoryStatus) {
             })
           : Array.from(filterLocations).map((element) => {
               let id = element['erick_id'];
-              console.log('Element: ', element);
 
               var loc = {
                 lat: parseFloat(element.lat),

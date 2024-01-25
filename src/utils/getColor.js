@@ -8,7 +8,7 @@ function stringToHash(str) {
 }
 
 function intToRGB(i) {
-    const c = (i & 0x00FFFFFF)
+    const c = (i & 0x00AFBABC)
         .toString(16)
         .toUpperCase()
         .padStart(6, '0');

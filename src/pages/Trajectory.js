@@ -1,3 +1,4 @@
+/* eslint-disable */
 import axios from 'axios';
 import { Map as Gmap, Marker, GoogleApiWrapper, InfoWindow } from 'google-maps-react';
 import { useEffect, useState } from 'react';
