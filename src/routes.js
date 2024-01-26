@@ -9,6 +9,7 @@ import Page404 from './pages/Page404';
 import ProductsPage from './pages/ProductsPage';
 import MapContainer from './pages/MapContainer';
 import Trajectory from './pages/Trajectory';
+import RegisterErick from './pages/RegisterErick';
 
 export default function Router(props) {
   const routes = useRoutes([
@@ -22,6 +23,7 @@ export default function Router(props) {
         { path: 'map', element: <MapContainer socket={props.socket}/> },
         { path: 'trajectory', element: <Trajectory socket={props.socket}/> },
         { path: 'downlink', element: <ProductsPage /> },
+        { path: 'registererick',element: <RegisterErick /> },
       ],
     },
     {
