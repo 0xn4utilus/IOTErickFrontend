@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Navigate, useRoutes } from 'react-router-dom';
 // layouts
 import DashboardLayout from './layouts/dashboard';
@@ -17,7 +18,7 @@ export default function Router(props) {
       children: [
         { element: <Navigate to="/login" />, index: true },
         { path: 'login', element: <LoginPage /> },
-        // { path: 'app', element: <UserPage /> },
+        { path: 'app', element: <UserPage /> },
         { path: 'map', element: <MapContainer socket={props.socket}/> },
         { path: 'trajectory', element: <Trajectory socket={props.socket}/> },
         { path: 'downlink', element: <ProductsPage /> },

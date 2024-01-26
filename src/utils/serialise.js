@@ -1,4 +1,23 @@
 /* eslint-disable */
+
+const getMockName = (id) => {
+    let x = 0;
+    let names = ["Ramesh Lal", "Kishore Kumar", "Khan Sahab", "Raksha Sharma", "KK Pant" ]
+    for(let i =0; i<id.length; i++){
+        x= (x+id.charCodeAt(i))%names.length
+    }
+    return names[x];
+}
+
+const getMockNumber = (id) => {
+    let x = 0;
+    let names = ["7894567891", "7457894127", "9456781258", "9456789128", "8974789458" ]
+    for(let i =0; i<id.length; i++){
+        x= (x+id.charCodeAt(i))%names.length
+    }
+    return names[x];
+}
+
 function serialise(data){
     console.log("unserialised: ",{data})
     if(data instanceof Map){
@@ -9,8 +28,8 @@ function serialise(data){
         const id = key;
         const lat = value.lat
         const lng = value.lng
-        const driver_name = value.driver_name
-        const driver_contact = value.driver_contact
+        const driver_name = getMockName(id)
+        const driver_contact = getMockNumber(id)
         let time = value.time
         const date = new Date(time)
         const year = date.getFullYear()

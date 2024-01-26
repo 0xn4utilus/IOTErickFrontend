@@ -42,9 +42,9 @@ export default function LoginForm() {
 
     try {
       axios.post('/admin-login', {
-        username,
-        email,
-        Password
+        'name': username,
+        'email': email,
+        'password': Password
       }).then((res) => {
         console.log(res.data);
         if(res.data.status === "success"){

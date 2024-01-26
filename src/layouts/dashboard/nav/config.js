@@ -21,11 +21,11 @@ const navConfig = [
     path: '/dashboard/trajectory',
     icon: icon('ic_analytics'),
   },
-  {
-    title: 'Downlink',
-    path: '/dashboard/downlink',
-    icon: icon('ic_cart'),
-  },
+  // {
+  //   title: 'Downlink',
+  //   path: '/dashboard/downlink',
+  //   icon: icon('ic_cart'),
+  // },
 ];
 
 export default navConfig;

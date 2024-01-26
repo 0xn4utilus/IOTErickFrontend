@@ -40,7 +40,7 @@ export default function DashboardAppPage() {
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Locations Reported" total={226} color="info" icon={'ant-design:apple-filled'} />
+            <AppWidgetSummary title="Locations Reported" total={36} color="info" icon={'ant-design:apple-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
@@ -48,7 +48,7 @@ export default function DashboardAppPage() {
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Rides Facilitated" total={1} color="error" icon={'ant-design:bug-filled'} />
+            <AppWidgetSummary title="Rides Facilitated" total={"zero"} color="error" icon={'ant-design:bug-filled'} />
           </Grid>
         </Grid>
       </Container>

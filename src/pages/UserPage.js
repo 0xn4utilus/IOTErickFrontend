@@ -102,6 +102,7 @@ export default function UserPage() {
  useEffect(() => {
   axios.get(`/get-erick-data/`).then((response) => {
       response.data.map((element) => {
+        console.log("elementttt",element)
           setData(
               (map) => new Map(map.set(element._id, element.data))
           );
@@ -193,7 +194,7 @@ console.log("lmao ded",{serialisedData})
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Locations Reported" total={226} color="info" icon={'fa6-solid:location-crosshairs'} />
+            <AppWidgetSummary title="Locations Reported" total={36} color="info" icon={'fa6-solid:location-crosshairs'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
@@ -201,7 +202,7 @@ console.log("lmao ded",{serialisedData})
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Rides Facilitated" total={1} color="error" icon={'majesticons:map-marker-path'} />
+            <AppWidgetSummary title="Rides Facilitated" total={"zero"} color="error" icon={'majesticons:map-marker-path'} />
           </Grid>
         </Grid>
         <Card>

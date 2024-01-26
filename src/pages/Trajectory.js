@@ -54,6 +54,10 @@ const animate = () => {
 
 window.requestAnimationFrame(animate);
 
+function isNumber(value) {
+  return !isNaN(value) && parseFloat(Number(value)) === value && !isNaN(parseInt(value, 10));
+}
+
 function Trajectory(props, trajectoryStatus) {
   const [locations, setLocations] = useState(new Map());
   const [filterLocations, setFilterLocations] = useState([]);
@@ -81,7 +85,9 @@ function Trajectory(props, trajectoryStatus) {
     let timestamps = [];
     try{
       var timeDifference = new Date(loc.slice(-1)[0].time).getTime() - new Date(loc[0].time).getTime();
-
+      if(!isNumber(timeDifference)){
+        throw 'Error';
+      }
     }catch{
       var timeDifference = 50000;
 
@@ -95,7 +101,6 @@ function Trajectory(props, trajectoryStatus) {
         `https://roads.googleapis.com/v1/snapToRoads?interpolate=true&path=${coordinateData}&key=AIzaSyBB5VtbYNkoqHZD9uPohGNszVQnSsCo5ko`
       )
       .then((response) => {
-        console.log('papa ki pari', response);
         locations = response.data.snappedPoints.map((x)=>({lat:x.location.latitude,lng:x.location.longitude })  )
         console.log(locations)
         // timestamps.push(Math.round((new Date(location.time).getTime() - offset) / 5000));
@@ -119,7 +124,6 @@ function Trajectory(props, trajectoryStatus) {
         last_lat = location.lat;
       }
       let data = [{ vendor: 0, path: path, timestamps: timestamps }];
-      console.log("lmao",JSON.stringify(data));
       propsGlobal.data = data;
       currentTime = 0;
       LOOP_LENGTH = timestamps[timestamps.length - 1];
