@@ -1,10 +1,11 @@
 import { useState } from 'react';
 // @mui
 import { alpha } from '@mui/material/styles';
-import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover } from '@mui/material';
+import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover, alertTitleClasses } from '@mui/material';
 // mocks_
 import account from '../../../_mock/account';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 // ----------------------------------------------------------------------
 
@@ -17,7 +18,7 @@ const MENU_OPTIONS = [
 
 // ----------------------------------------------------------------------
 
-export default function AccountPopover() {
+export default function AccountPopover({isAdmin, name, email, setIsAdmin, setName, setEmail}) {
   const [open, setOpen] = useState(null);
   const navigate = useNavigate();
 
@@ -26,7 +27,23 @@ export default function AccountPopover() {
   };
 
   const logoutNow = (event) => {
-    navigate('/login', { replace: true });
+
+    if(isAdmin) {
+      axios.get('/admin-logout').then((res) => {
+        if(res.data.status === "success"){
+          setIsAdmin(false);
+          setName("Student");
+          setEmail("no-email");
+        } else {
+          alert("Logout failed");
+        }
+      }
+      ).catch((err) => {
+        console.log(err);
+      })
+    } else {
+      navigate('/login', { replace: true });
+    }
   };
 
   const handleClose = () => {
@@ -76,10 +93,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {account.displayName}
+            {name}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+            {email}
           </Typography>
         </Box>
 
@@ -96,7 +113,7 @@ export default function AccountPopover() {
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <MenuItem onClick={logoutNow} sx={{ m: 1 }}>
-          Logout
+          {isAdmin ? "Logout" : "Login as Admin"}
         </MenuItem>
       </Popover>
     </>

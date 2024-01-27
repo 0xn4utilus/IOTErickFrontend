@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
 //
 import Header from './header';
 import Nav from './nav';
+import axios from 'axios';
 
 // ----------------------------------------------------------------------
 
@@ -34,12 +35,34 @@ const Main = styled('div')(({ theme }) => ({
 
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [name, setName] = useState("Student");
+  const [email, setEmail] = useState("no-email");
+
+  useEffect(() => {
+    // check if user is logged in
+    axios.get('/check-already-login').then((res) => {
+      console.log(res.data);
+      if(res.data.status === "success"){
+        setIsAdmin(true);
+        setName(res.data.name);
+        setEmail(res.data.email);
+      } else {
+        setIsAdmin(false);
+        setName("Student");
+        setEmail("no-email");
+      }
+    }
+    ).catch((err) => {
+      console.log(err);
+    })
+  }, []);
 
   return (
     <StyledRoot>
-      <Header onOpenNav={() => setOpen(true)} />
+      <Header onOpenNav={() => setOpen(true)} isAdmin={isAdmin} name={name} email={email} setIsAdmin={setIsAdmin} setName={setName} setEmail={setEmail} />
 
-      <Nav openNav={open} onCloseNav={() => setOpen(false)} />
+      <Nav openNav={open} onCloseNav={() => setOpen(false)} isAdmin={isAdmin} name={name} />
 
       <Main>
         <Outlet />
