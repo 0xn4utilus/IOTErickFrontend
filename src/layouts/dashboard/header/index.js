@@ -42,7 +42,7 @@ Header.propTypes = {
   onOpenNav: PropTypes.func,
 };
 
-export default function Header({ onOpenNav }) {
+export default function Header({ onOpenNav, isAdmin, name, email, setIsAdmin, setName, setEmail}) {
   return (
     <StyledRoot>
       <StyledToolbar>
@@ -68,7 +68,7 @@ export default function Header({ onOpenNav }) {
           }}
         >
           {/* <NotificationsPopover /> */}
-          <AccountPopover />
+          <AccountPopover isAdmin={isAdmin} name={name} email={email} setEmail={setEmail}  setName={setName} setIsAdmin={setIsAdmin} />
         </Stack>
       </StyledToolbar>
     </StyledRoot>
