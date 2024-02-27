@@ -19,7 +19,6 @@ const getMockNumber = (id) => {
 }
 
 function serialise(data){
-    console.log("unserialised: ",{data})
     if(data instanceof Map){
         
         return Array.from(data.keys()).map((key)=>{
