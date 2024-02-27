@@ -17,11 +17,20 @@ import {
   AppCurrentSubject,
   AppConversionRates,
 } from '../sections/@dashboard/app';
+// import { useEffect } from 'react';
 
 // ----------------------------------------------------------------------
 
 export default function DashboardAppPage() {
   const theme = useTheme();
+
+  // useEffect(() => {
+  //   axios.get('/dashboard').then((res) => {
+  //     console.log(res.data);
+  //   }).catch((err) => {
+  //     console.log(err);
+  //   })
+  // }, []);
 
   return (
     <>

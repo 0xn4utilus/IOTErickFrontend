@@ -7,6 +7,7 @@ export default function RegisterErick() {
   const [erickValue, setErickValue] = useState("");
   const [deviceName, setDeviceName] = useState("");
   const [deviceUser, setDeviceUser] = useState("");
+  const [userContact, setUserContact] = useState("");
 
 const erickRegister = () => {
     console.log("Register Erick");
@@ -17,6 +18,7 @@ const erickRegister = () => {
             "device_id":erickValue, 
             "device_name":deviceName,
             "device_user":deviceUser,
+            "user_contact":userContact
         }
     }).then((res) => {
         console.log(res.status);
@@ -25,6 +27,7 @@ const erickRegister = () => {
           setErickValue("");
           setDeviceName("");
           setDeviceUser("");
+          setUserContact("");
         }
         else{
           alert("Invalid details");
@@ -44,6 +47,10 @@ const handleChangeDeviceUser = e => {
     setDeviceUser(e.target.value)
 }
 
+const handleChangeUserContact = e => {
+  setUserContact(e.target.value)
+}
+
   return (
     <>
       <Helmet>
@@ -59,6 +66,9 @@ const handleChangeDeviceUser = e => {
         </div>
         <div className="p-2" style={{padding :"10px"}}>
             <TextField value={deviceUser} style = {{width: 300}} label="Enter Device User" color="secondary" focused onChange={handleChangeDeviceUser}/>
+        </div>
+        <div className='p-2' style={{padding :"10px"}}>
+          <TextField value={userContact} style = {{width: 300}} label="Enter User Contact" color="secondary" focused onChange={handleChangeUserContact}/>
         </div>
         <div className="p-2" style={{padding :"10px"}}>
             <Button variant="contained" onClick={erickRegister} >Register</Button>
