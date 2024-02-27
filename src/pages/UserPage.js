@@ -96,24 +96,34 @@ export default function UserPage() {
 
   const [data, setData] = useState(new Map())
 
+  const [userdata, setUserData] = useState(new Map())
+
   const [serialisedData, setSerialisedData] = useState([])
   
   const navigate = useNavigate();
  useEffect(() => {
-  axios.get(`/get-erick-data/`).then((response) => {
-      response.data.map((element) => {
-        console.log("elementttt",element)
-          setData(
-              (map) => new Map(map.set(element._id, element.data))
-          );
+   
+   axios.get(`/dashboard/`).then((response) => {
+     response.data.map((element) => {
+       setUserData(
+         (map) => new Map(map.set(element.device_id, [element.device_user,element.user_contact]))
+         );
+        });
       });
- });
+      
+      axios.get(`/get-erick-data/`).then((response) => {
+          response.data.map((element) => {
+              setData(
+                  (map) => new Map(map.set(element._id, element.data))
+              );
+          });
+     });
+
 }, []);
 useEffect(() => {
-  setSerialisedData(serialise(data))
+  setSerialisedData(serialise(data,userdata))
 }, [data])
 
-console.log("lmao ded",{serialisedData})
 
   const handleOpenMenu = (id) => {
     console.log({id})
@@ -190,11 +200,11 @@ console.log("lmao ded",{serialisedData})
       <Container>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Registered E-Ricks" total={3} icon={'fluent-mdl2:verified-brand-solid'} />
+            <AppWidgetSummary title="Registered E-Ricks" total={userdata.size} icon={'fluent-mdl2:verified-brand-solid'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Locations Reported" total={36} color="info" icon={'fa6-solid:location-crosshairs'} />
+            <AppWidgetSummary title="Locations Reported" total={104} color="info" icon={'fa6-solid:location-crosshairs'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>

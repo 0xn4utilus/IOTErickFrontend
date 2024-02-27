@@ -18,17 +18,17 @@ const getMockNumber = (id) => {
     return names[x];
 }
 
-function serialise(data){
+function serialise(data, userData){
     if(data instanceof Map){
-        
+  
         return Array.from(data.keys()).map((key)=>{
             
         const value = data.get(key); 
         const id = key;
         const lat = value.lat
         const lng = value.lng
-        const driver_name = getMockName(id)
-        const driver_contact = getMockNumber(id)
+        const driver_name =  userData.has(id) ?  userData.get(id)[0] : getMockName(id) 
+        const driver_contact = userData.has(id) ?  userData.get(id)[1] :getMockNumber(id)
         let time = value.time
         const date = new Date(time)
         const year = date.getFullYear()
