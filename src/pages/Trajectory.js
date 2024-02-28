@@ -92,8 +92,14 @@ function Trajectory(props, trajectoryStatus) {
       var timeDifference = 50000;
 
     }
-    loc.map((element) => {
-      coordinateData += element.lat + ',' + element.lng + '|';
+    loc.map((element,i) => {
+      if(loc.length > 99){
+        if(i%3==0){
+          coordinateData += element.lat + ',' + element.lng + '|';
+        }
+      }else{
+        coordinateData += element.lat + ',' + element.lng + '|';
+      }
     });
     coordinateData = coordinateData.substring(0, coordinateData.length - 1);
     axios
