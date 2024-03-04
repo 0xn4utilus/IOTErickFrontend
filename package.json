@@ -89,7 +89,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^2.7.1"
   },
-  "proxy": "http://localhost:5050",
+  "proxy": "http://localhost:4030",
   "overrides": {
     "@svgr/webpack": "^6.5.0"
   }

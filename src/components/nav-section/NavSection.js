@@ -17,7 +17,7 @@ export default function NavSection({ data = [], isAdmin, ...other}) {
       <List disablePadding sx={{ p: 1 }}>
         {data.map((item) => (
           // item.title === 'Register-Erick' && !isAdmin ? null : <NavItem key={item.title} item={item} />
-          ((item.title ==='Register-Erick' && !isAdmin) || (item.title==='Downlink')) ? null : <NavItem key={item.title} item={item} />
+          ((item.title ==='Register-Erick' && !isAdmin) ) ? null : <NavItem key={item.title} item={item} />
         ))}
       </List>
     </Box>
